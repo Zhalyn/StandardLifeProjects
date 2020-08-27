@@ -1,0 +1,769 @@
+<!-- come here later -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <script
+  src="https://code.jquery.com/jquery-3.5.1.js"
+  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+  crossorigin="anonymous"></script>
+  <meta charset="utf-8">
+	<title>
+		Standard Life Archive
+	</title>
+	<style>
+
+	table {
+    	border-collapse:collapse;
+    	width:100%;
+    	max-width:700px;
+    	min-width:400px;
+    	text-align:center;
+	}
+
+	caption {
+    	caption-side:bottom;
+    	font-weight:bold;
+    	font-style:italic;
+    	margin:4px;
+	}
+
+	table,th, td {
+    	border: 1px solid gray;
+	}
+
+	th, td {
+    	height: 24px;
+    	padding:4px;
+    	vertical-align:middle;
+	}
+
+	.title:hover{
+		background: rgba(0,0,0,0.8);
+		color: #fff;
+		cursor: pointer;
+		transition-property: transform;
+		transform: scale(1.2);
+		transition-duration: 0.3s, 300ms
+	}
+
+	#myInput {
+  	width: 97%; /* Full-width */
+  	font-size: 16px; /* Increase font-size */
+  	padding: 12px 20px 12px 40px; /* Add some padding */
+  	border: 1px solid #ddd; /* Add a grey border */
+  	margin-bottom: 12px; /* Add some space below the input */
+    border-radius: 8px;
+  }
+
+  #excelButton{
+    margin-top: 12px;
+    height: 35px;
+    font-size: 16px;
+    position: center;
+    background-color: #E8ECFF;
+    border-radius: 10px;
+  }
+
+  #excelButton:hover{
+    background: rgba(0,0,0,0.8);
+    color: #fff;
+    cursor: pointer;
+    transition-property: transform;
+    transform: scale(1.2);
+    transition-duration: 0.3s, 300ms
+  }
+
+  .align {
+  margin:0 auto;
+  max-width: 1800px;
+  }
+
+  .search-wrapper {
+  position: relative;
+  margin: 15px auto 0;
+  width: 500px;
+  margin-bottom: 20px;
+
+  }
+  .search-wrapper input,
+  .search-wrapper select {
+  padding-left: 12px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  }
+  .search-wrapper input {
+  height: 50px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 310px;
+  padding-right: 12px;
+  margin-bottom: 50px;
+  }
+  .search-wrapper input.active {
+  z-index: 1;
+  }
+  .search-wrapper select {
+  background-color: #333;
+  color: white;
+  width: 163px;
+  height: 56px;
+  float: right;
+  margin-left: -1px;
+  border: 1px solid #333;
+  }
+  .search-wrapper select option {
+  background: white;
+  color: #333;
+  }
+	
+	</style>
+</head>
+<body>
+
+	<h1 id="popup" align="center" style = "font-family: Verdana;">Архив Договоров Standard Life</h1>
+
+  <div class="align">
+	<!-- <input type="text" id="myInput" onkeyup = "search()" placeholder="Введите данные..."> -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<div class="search-wrapper">
+    <form autocomplete="off" id="search">
+        <input id="NumInput" type="text" name="num" placeholder="Номер договора..." onkeyup = "searchForNum()" class="main-search-input active" />
+        <input id="NameInput" type="text" name="name" placeholder="Страхователь..." onkeyup = "searchForName()" class="main-search-input" />
+        <input id="STInput" type="text" name="st" placeholder="Дата договора..." onkeyup = "searchForST()" class="main-search-input" />
+        <input id="BDInput" type="text" name="bd" placeholder="Дата начало..." onkeyup = "searchForBD()" class="main-search-input" />
+        <input id="EDInput" type="text" name="ed" placeholder="Дата окончания..." onkeyup = "searchForED()" class="main-search-input" />
+        <select id="searchChoice">
+            <option value="num">Номер договора</option>
+            <option value="name">Страхователь</option>
+            <option value="st">Дата договора</option>
+            <option value="bd">Дата начало</option>
+            <option value="ed">Дата окончания</option>
+        </select>
+    </form>
+</div>
+
+	<table id="myTable" align="center" border="1px" style="width: 1400px; line-height: 30px;">
+    <thead>
+		  <tr>
+			   <th colspan="17" style="font-family: Verdana;"><h2>Данные договоров</h2></th>
+		  </tr>
+    </thead>
+    <tbody>
+      <t class="element">
+       <th style="font-family: Verdana;">ID</th>
+       <th style="font-family: Verdana;">Страховая сумма</th>
+       <th style="font-family: Verdana;">Тип графика</th>
+       <th style="font-family: Verdana;">Номер договора</th>
+       <th style="font-family: Verdana;">Страхователь</th>
+       <th style="font-family: Verdana;">Премия</th>
+       <th style="font-family: Verdana;">Комиссия в валюте</th>
+       <th style="font-family: Verdana;">Дата договора</th>
+       <th style="font-family: Verdana;">Дата начало</th>
+       <th style="font-family: Verdana;">Дата окончания</th>
+       <th style="font-family: Verdana;">Дата окончания страх. защиты</th>
+       <th style="font-family: Verdana;">Страховщик подписант</th>
+       <th style="font-family: Verdana;">Менеджер договора</th>
+       <th style="font-family: Verdana;">Вариант оплаты договора</th>
+       <th style="font-family: Verdana;">Польз. активоравший дог.</th>
+       <th style="font-family: Verdana;">Статус договора</th>
+      </t>
+    </tbody>
+    <tbody id="searchRes">
+      <!-- search results are put here -->
+    </tbody>
+
+	</table>
+
+  <button id="excelButton" style="display: none" onclick="tablesToExcel(['myTable'], ['ProductDay1'], 'ExcelFile.xls', 'Excel')">Перевести в Excel</button>
+
+  </div>
+
+	<script>
+
+    //colorizes the queries
+		function colorize() {
+  		var elements = document.getElementsByTagName("tr");
+  			for(i = 0; i < elements.length; i++) {
+    			if((Math.round(i / 2) * 2) == ((i / 2) * 2) )
+    				elements.item(i).style.background="#E8ECFF";
+  			} 
+		}
+
+		window.onload = colorize;
+
+    //searches for the keywords
+
+    function searchForNum() {
+    // input = document.getElementById("myInput");
+    input = document.getElementById("NumInput");
+    const num = input.value;
+    var x = document.getElementById("excelButton")
+
+    //In order to make a search bar for every individual table, I have to create several php files for data parsing. 
+
+   $.ajax({
+      url: "NumParser.php",
+      type: "POST",
+      dataType: "JSON",
+      data: {num:num}, 
+      success: function (res) { //resulted data from the database
+          console.log(res);
+
+          let responseData = "";
+
+          if(res.length != 0){ //printing an empty table if values in the array are undefined
+            for(i=0; i<res.length; i++){
+              responseData +=
+                  "<tr>" +
+                  '<td class="count" style="font-family: Verdana;">' +
+                  res[i]["id"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["inssum"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["payschedtype"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["agreeno"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["hname"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["premium"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["cmsvlt"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["signtime"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["fromdate"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["tilldate"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["instilldate"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["sname"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["mname"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["iscash"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["aname"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["state"] +
+                  "</td>" +                                                                     
+                  "</tr>";
+              x.style.display = "block";
+            }
+          }else
+            x.style.display = "none";
+
+              $("#searchRes").html(responseData);
+
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+        console.log("errorGET: "+ textStatus + ", Error: " + errorThrown);
+      }
+    });
+    }
+
+		function searchForName() {
+  	input = document.getElementById("NameInput");
+    const name = input.value;
+    var x = document.getElementById("excelButton")
+
+   $.ajax({
+      url: "NameParser.php",
+      type: "POST",
+      dataType: "JSON",
+      data: {name:name}, 
+      success: function (res) { //resulted data from the database
+          console.log(res);
+
+          let responseData = "";
+
+          if(res.length != 0){ //printing an empty table if values in the array are undefined
+            for(i=0; i<res.length; i++){
+              responseData +=
+                  "<tr>" +
+                  '<td class="count" style="font-family: Verdana;">' +
+                  res[i]["id"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["inssum"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["payschedtype"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["agreeno"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["hname"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["premium"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["cmsvlt"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["signtime"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["fromdate"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["tilldate"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["instilldate"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["sname"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["mname"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["iscash"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["aname"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["state"] +
+                  "</td>" +                                                                     
+                  "</tr>";
+              x.style.display = "block";
+            }
+          }else
+            x.style.display = "none";
+
+              $("#searchRes").html(responseData);
+
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+        console.log("errorGET: "+ textStatus + ", Error: " + errorThrown);
+      }
+    });
+		}
+
+
+    function searchForST() {
+    input = document.getElementById("STInput");
+    const st = input.value;
+    var x = document.getElementById("excelButton")
+
+    //In order to make a search bar for every individual table, I have to create several php files for data parsing. 
+
+   $.ajax({
+      url: "SignDateParser.php",
+      type: "POST",
+      dataType: "JSON",
+      data: {st:st}, 
+      success: function (res) { //resulted data from the database
+          console.log(res);
+
+          let responseData = "";
+
+          if(res.length != 0){ //printing an empty table if values in the array are undefined
+            for(i=0; i<res.length; i++){
+              responseData +=
+                  "<tr>" +
+                  '<td class="count" style="font-family: Verdana;">' +
+                  res[i]["id"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["inssum"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["payschedtype"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["agreeno"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["hname"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["premium"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["cmsvlt"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["signtime"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["fromdate"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["tilldate"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["instilldate"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["sname"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["mname"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["iscash"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["aname"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["state"] +
+                  "</td>" +                                                                     
+                  "</tr>";
+              x.style.display = "block";
+            }
+          }else
+            x.style.display = "none";
+
+              $("#searchRes").html(responseData);
+
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+        console.log("errorGET: "+ textStatus + ", Error: " + errorThrown);
+      }
+    });
+    }
+
+    function searchForBD() {
+    input = document.getElementById("BDInput");
+    const bd = input.value;
+    var x = document.getElementById("excelButton")
+
+    //Searching for beginning date 
+
+   $.ajax({
+      url: "BegginingDateParser.php",
+      type: "POST",
+      dataType: "JSON",
+      data: {bd:bd}, 
+      success: function (res) { //resulted data from the database
+          console.log(res);
+
+          let responseData = "";
+
+          if(res.length != 0){ //printing an empty table if values in the array are undefined
+            for(i=0; i<res.length; i++){
+              responseData +=
+                  "<tr>" +
+                  '<td class="count" style="font-family: Verdana;">' +
+                  res[i]["id"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["inssum"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["payschedtype"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["agreeno"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["hname"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["premium"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["cmsvlt"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["signtime"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["fromdate"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["tilldate"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["instilldate"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["sname"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["mname"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["iscash"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["aname"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["state"] +
+                  "</td>" +                                                                     
+                  "</tr>";
+              x.style.display = "block";
+            }
+          }else
+            x.style.display = "none";
+
+              $("#searchRes").html(responseData);
+
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+        console.log("errorGET: "+ textStatus + ", Error: " + errorThrown);
+      }
+    });
+    }
+
+    function searchForED() {
+    // input = document.getElementById("myInput");
+    input = document.getElementById("EDInput");
+    const ed = input.value;
+    var x = document.getElementById("excelButton")
+
+    //In order to make a search bar for every individual table, I have to create several php files for data parsing. 
+
+   $.ajax({
+      url: "EndDateParser.php",
+      type: "POST",
+      dataType: "JSON",
+      data: {ed:ed}, 
+      success: function (res) { //resulted data from the database
+          console.log(res);
+
+          let responseData = "";
+
+          if(res.length != 0){ //printing an empty table if values in the array are undefined
+            for(i=0; i<res.length; i++){
+              responseData +=
+                  "<tr>" +
+                  '<td class="count" style="font-family: Verdana;">' +
+                  res[i]["id"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["inssum"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["payschedtype"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["agreeno"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["hname"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["premium"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["cmsvlt"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["signtime"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["fromdate"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["tilldate"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["instilldate"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["sname"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["mname"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["iscash"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["aname"] +
+                  "</td>";
+              responseData +=
+                  '<td class="title" style="font-family: Verdana;">' +
+                  res[i]["state"] +
+                  "</td>" +                                                                     
+                  "</tr>";
+              x.style.display = "block";
+            }
+          }else
+            x.style.display = "none";
+
+              $("#searchRes").html(responseData);
+
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+        console.log("errorGET: "+ textStatus + ", Error: " + errorThrown);
+      }
+    });
+    }
+
+    //Special script that turns the table info into an excel file 
+    var tablesToExcel = (function() {
+    var uri = 'data:application/vnd.ms-excel;base64,'
+    , tmplWorkbookXML = '<?xml version="1.0"?><?mso-application progid="Excel.Sheet"?><Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">'
+      + '<DocumentProperties xmlns="urn:schemas-microsoft-com:office:office"><Author>Axel Richter</Author><Created>{created}</Created></DocumentProperties>'
+      + '<Styles>'
+      + '<Style ss:ID="Currency"><NumberFormat ss:Format="Currency"></NumberFormat></Style>'
+      + '<Style ss:ID="Date"><NumberFormat ss:Format="Medium Date"></NumberFormat></Style>'
+      + '</Styles>' 
+      + '{worksheets}</Workbook>'
+    , tmplWorksheetXML = '<Worksheet ss:Name="{nameWS}"><Table>{rows}</Table></Worksheet>'
+    , tmplCellXML = '<Cell{attributeStyleID}{attributeFormula}><Data ss:Type="{nameType}">{data}</Data></Cell>'
+    , base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
+    , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
+    return function(tables, wsnames, wbname, appname) {
+      var ctx = "";
+      var workbookXML = "";
+      var worksheetsXML = "";
+      var rowsXML = "";
+
+      for (var i = 0; i < tables.length; i++) {
+        if (!tables[i].nodeType) tables[i] = document.getElementById(tables[i]);
+        for (var j = 0; j < tables[i].rows.length; j++) {
+          rowsXML += '<Row>'
+          for (var k = 0; k < tables[i].rows[j].cells.length; k++) {
+            var dataType = tables[i].rows[j].cells[k].getAttribute("data-type");
+            var dataStyle = tables[i].rows[j].cells[k].getAttribute("data-style");
+            var dataValue = tables[i].rows[j].cells[k].getAttribute("data-value");
+            dataValue = (dataValue)?dataValue:tables[i].rows[j].cells[k].innerHTML;
+            var dataFormula = tables[i].rows[j].cells[k].getAttribute("data-formula");
+            dataFormula = (dataFormula)?dataFormula:(appname=='Calc' && dataType=='DateTime')?dataValue:null;
+            ctx = {  attributeStyleID: (dataStyle=='Currency' || dataStyle=='Date')?' ss:StyleID="'+dataStyle+'"':''
+                   , nameType: (dataType=='Number' || dataType=='DateTime' || dataType=='Boolean' || dataType=='Error')?dataType:'String'
+                   , data: (dataFormula)?'':dataValue
+                   , attributeFormula: (dataFormula)?' ss:Formula="'+dataFormula+'"':''
+                  };
+            rowsXML += format(tmplCellXML, ctx);
+          }
+          rowsXML += '</Row>'
+        }
+        ctx = {rows: rowsXML, nameWS: wsnames[i] || 'Sheet' + i};
+        worksheetsXML += format(tmplWorksheetXML, ctx);
+        rowsXML = "";
+      }
+
+      ctx = {created: (new Date()).getTime(), worksheets: worksheetsXML};
+      workbookXML = format(tmplWorkbookXML, ctx);
+
+
+
+      var link = document.createElement("A");
+      link.href = uri + base64(workbookXML);
+      link.download = wbname || 'Workbook.xls';
+      link.target = '_blank';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  })();
+
+$('#searchChoice').on('change', function() {
+      if(!$('#search').find('input[name="'+this.value+'"]').hasClass('active')){
+          $('#search').find('input').val('');
+          $('#search').find('input').removeClass('active required').prop('disabled',true);
+          $('#search').find('input[name="'+this.value+'"]').addClass('active required').prop('disabled',false);
+      }   
+  });
+
+
+	</script>
+
+
+</body>
+</html>
