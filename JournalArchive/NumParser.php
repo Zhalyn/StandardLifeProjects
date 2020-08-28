@@ -1,8 +1,8 @@
  <?php
 
-$username = "LIFEFND";
-$password = "lifefnd11!!";
-$servername = "10.0.0.28/LIFEFND";
+$username = /////////////;
+$password = /////////////;
+$servername = ////////////;
 
 $conn = oci_connect($username, $password, $servername, 'AL32UTF8');
 
