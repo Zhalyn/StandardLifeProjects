@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="utf-8">
+	<title>Login</title>
+	<link rel="stylesheet" type="text/css" href="LoginStyle1.css">
+</head>
+<body>
+	<div class="hero">
+		<div class="form-box">
+			<div class="button-box">
+				<div id="btn"></div>
+				<button type="button" class="toggle-btn" onclick="login()">Логин</button>
+				<button type="button" class="toggle-btn" onclick="register()">Регистрация</button>
+			</div>
+			<div class="social-icons">
+				<a class="icons" href="https://www.instagram.com/std_lifekz/"><img src="instagram.png"></a>
+				<a href="https://www.facebook.com/pg/life.stdi.kz/posts/"><img id="facebook" src="facebook.png"></a>
+				<a href="https://www.linkedin.com/company/standard-life-jsc-life-insurance/"><img src="linkedin.png"></a>
+			</div>
+			<form id="login" class="input-group" action="Login.php" method="post">
+				<input type="email" name="email" class="input-field" placeholder="Введите свой email" oninvalid="this.setCustomValidity('Заполните эту строку')" required>
+				<input type="password" name="password" class="input-field" placeholder="Введите пароль" oninvalid="this.setCustomValidity('Заполните эту строку')" required>
+				<input type="checkbox" class="check-box"><span>Запомнить пароль</span>
+				<button type="submit" class="submit-btn">Авторизация</button>
+			</form>
+			<form id="register" class="input-group" action="Register.php" method="post">
+				<input type="text" name="user" class="input-field-entry" placeholder="Введите Имя" required>
+				<input type="text" name="surname" class="input-field-entry" placeholder="Введите Фамилию" required>
+				<input type="email" name="email" class="input-field" placeholder="Введите свой адресс email" required="Yooo">
+				<input type="password" name="password" class="input-field" placeholder="Введите пароль" required>
+				<input type="text" name="phone" class="input-field" placeholder="Введите свой номер телефона" required>
+				<input type="text" name="ssn" class="input-field" placeholder="Введите свой ИИН" required>
+				<input type="checkbox" class="check-box"><span>Я согласен с условиями пользования</span>
+				<button type="submit" class="submit-btn">Зарегестрироваться</button>
+			</form>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var x = document.getElementById("login");
+		var y = document.getElementById("register");
+		var z = document.getElementById("btn");
+
+		function register(){
+			x.style.left = "-400px";
+			y.style.left = "50px";
+			z.style.left = "110px";
+		}
+
+		//add a php to this so it sends the data, possibly might write an ajax method
+		function login(){
+			x.style.left = "50px";
+			y.style.left = "450px";
+			z.style.left = "0";
+		}
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+*{
+	font-family: Gill Sans;
+}
+
+.hero{
+	height: 100%;
+	width: 100%;
+	background-image: url(vector2.jpg);
+	background-position: center;
+	background-size: cover;
+	position: absolute;
+}
+
+#myTable {
+    border-collapse:collapse;
+    width:100%;
+    max-width:700px;
+    min-width:400px;
+    text-align:center;
+    margin-top: 40px;
+    background-color: white;
+}
+
+#header{
+	text-align: center;
+	font-size: 2em;
+	font-weight: bolder;
+	margin-top: 20px;
+}
+
+button {
+	padding: 10px 30px;
+	cursor: pointer;
+	display: block;
+	margin: auto;
+	background: linear-gradient(to right, #2E86C1, #85C1E9);
+	border: 0;
+	outline: none;
+	border-radius: 30px;
+	margin-bottom: 20px;
+}
+
+button:hover{
+	cursor: pointer;
+	transition-property: transform;
+	transform: scale(1.2);
+	transition-duration: 0.3s, 300ms;
+}
