@@ -13,6 +13,7 @@ The webpage is made up of several components: a search bar, an HTML table and an
 Standard Life Home is a webpage for SL's clients to check on their insurance data (payment deadlines, insurance agent contact info., etc.). The project is not complete yet but most of the components such as data parsing from a db and login/registration system are already implemented. Technologies used: HTML, CSS, JavaScript, PHP, JQuery, OracleSQL.
 
 ![StandardLifeHome](https://github.com/Zhalyn/StandardLifeProjects/blob/master/StandardLifeHome/Screenshot1.png)
+![StandardLifeHome](https://github.com/Zhalyn/StandardLifeProjects/blob/master/StandardLifeHome/Screenshot3.png)
 
 # Key Features
 In order to authenticate each user entering the website, a simple login/registration system, with PHP supproing data authentication through a database, was developed. Each client's relevant information is tied to their individual identification number (similiar to social security number), so typing that data is required in order to register into the system. In home.php (the webpage itself), similiar to JournalArchive, each individuals data is parsed onto an HTML table displaying them to the users. 
